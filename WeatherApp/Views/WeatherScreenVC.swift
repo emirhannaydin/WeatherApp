@@ -25,8 +25,6 @@ protocol WeatherVCInterface: AnyObject {
     func changeImage(data: Data)
     func presentAlertOnMainThread(title: String, message: String, buttonTitle: String)
     func changeGIF(icon: String)
-    
-
 }
 
 final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
@@ -57,8 +55,6 @@ final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
     var favoriteButtonBool = false
     let animation = LottieAnimationView(name: "favorite")
 
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,7 +110,6 @@ final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
         }
 
         if favoriteButtonBool {
-            // kaldır
             favoriteButton.setImage(UIImage(systemName: "star"), for: .normal)
             favoriteButtonBool = false
             if let index = favoriteCities.firstIndex(of: cityName) {
@@ -122,7 +117,6 @@ final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
             }
             cityCoordinates.removeValue(forKey: cityName)
         } else {
-            // ekle
             favoriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             favoriteButtonBool = true
             if !favoriteCities.contains(cityName) {

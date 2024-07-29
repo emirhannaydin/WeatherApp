@@ -508,7 +508,7 @@ extension WeatherScreenVC: WeatherVCInterface {
     }
     
     func prepareTableView() {
-        tableView.register(WATableViewCell.self, forCellReuseIdentifier: WATableViewCell.identifier)
+        tableView.register(WSTableViewCell.self, forCellReuseIdentifier: WSTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isScrollEnabled = false
@@ -524,7 +524,7 @@ extension WeatherScreenVC: WeatherVCInterface {
             layout.minimumLineSpacing = 3
             
             collectionView.collectionViewLayout = layout
-            collectionView.register(WACollectionViewCell.self, forCellWithReuseIdentifier: WACollectionViewCell.identifier)
+            collectionView.register(WSCollectionViewCell.self, forCellWithReuseIdentifier: WSCollectionViewCell.identifier)
             collectionView.dataSource = self
             collectionView.delegate = self
             collectionView.translatesAutoresizingMaskIntoConstraints = false

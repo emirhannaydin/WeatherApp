@@ -18,6 +18,7 @@ class FavoritesVC: UIViewController {
         super.viewDidLoad()
         configureTableView()
         configureView()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,7 +33,7 @@ class FavoritesVC: UIViewController {
     func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "favoritesCell")
+        tableView.register(FTableViewCell.self, forCellReuseIdentifier: FTableViewCell.identifier)
     }
     
     func configureView() {
@@ -43,6 +44,14 @@ class FavoritesVC: UIViewController {
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.separatorColor = UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0)
 
+    }
+    
+    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
+        DispatchQueue.main.async {
+            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: buttonTitle, style: .default))
+            self.present(alertVC, animated: true)
+        }
     }
     
     

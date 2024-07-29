@@ -26,7 +26,7 @@ class LoginScreenVC: UIViewController, UITextFieldDelegate {
         configureAnimation()
         configureWeatherImage()
         configureGestureRecognizer()
-        LoginScreenVC.apiTextField.text = "8ddadecc7ae4f56fee73b2b405a63659"
+        LoginScreenVC.apiTextField.text = "254a1e08a44c468b166af2b5718ae70a"
 
     }
     

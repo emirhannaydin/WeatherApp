@@ -17,7 +17,7 @@ extension WeatherScreenVC: UICollectionViewDataSource, UICollectionViewDelegateF
     }
      
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WACollectionViewCell.identifier, for: indexPath) as! WACollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WSCollectionViewCell.identifier, for: indexPath) as! WSCollectionViewCell
         let model = viewModel.hours[indexPath.row]
         cell.setup(model: model)
         cell.layer.borderWidth = 0
@@ -44,7 +44,7 @@ extension WeatherScreenVC: UICollectionViewDataSource, UICollectionViewDelegateF
         // Dark Mode
         let darkModeBackgroundColor = UIColor.black
         
-        if let customCell = cell as? WACollectionViewCell {
+        if let customCell = cell as? WSCollectionViewCell {
             customCell.backgroundColor = UIColor { traitCollection in
                 return traitCollection.userInterfaceStyle == .dark ? darkModeBackgroundColor : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
             }

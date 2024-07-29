@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WATableViewCell: UITableViewCell {
+class WSTableViewCell: UITableViewCell {
     static let identifier = "DailyCell"
 
     
@@ -23,7 +23,6 @@ class WATableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configure()
     }
     
     func setup(model: Daily) {
@@ -81,7 +80,6 @@ class WATableViewCell: UITableViewCell {
         minTempLabel.textColor = .systemGray2
         
         tempImageView.contentMode = .scaleAspectFit
-        //dayLabel.font = UIFont.systemFont(ofSize: 80)
         dayLabel.translatesAutoresizingMaskIntoConstraints = false
         minTempLabel.translatesAutoresizingMaskIntoConstraints = false
         maxTempLabel.translatesAutoresizingMaskIntoConstraints = false

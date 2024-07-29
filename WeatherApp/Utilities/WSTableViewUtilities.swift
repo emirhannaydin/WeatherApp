@@ -13,7 +13,7 @@ extension WeatherScreenVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: WATableViewCell.identifier, for: indexPath) as! WATableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: WSTableViewCell.identifier, for: indexPath) as! WSTableViewCell
         
         let model = viewModel.days[indexPath.row]
         

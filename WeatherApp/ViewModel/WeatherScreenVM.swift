@@ -27,6 +27,8 @@ final class WeatherScreenVM {
     var currentLatitude = Double()
     var currentLongitude = Double()
     
+   
+    
     
     func getCityName(latitude: Double, longitude: Double) {
 
@@ -68,7 +70,6 @@ final class WeatherScreenVM {
             self?.view?.changeUI(weather: weather, lat: latitude, lon: longitude)
             self?.days = weather.daily
             self?.hours = weather.hourly
-            
             self?.currentLatitude = latitude
             self?.currentLongitude = longitude
             

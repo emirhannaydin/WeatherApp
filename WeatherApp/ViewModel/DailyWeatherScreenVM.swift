@@ -31,7 +31,6 @@ final class DailyWeatherScreenVM {
                     self?.view?.changeImage(data: data)
                         }
                     }
-                
         }
     }
     

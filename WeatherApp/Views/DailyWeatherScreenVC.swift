@@ -36,6 +36,7 @@ final class DailyWeatherScreenVC: UIViewController {
     let firstStackView = UIStackView()
     let secondStackView = UIStackView()
     let thirdStackView = UIStackView()
+    let humidityStackView = UIStackView()
     
 
 
@@ -200,14 +201,15 @@ extension DailyWeatherScreenVC: DailyWeatherVCInterface {
         firstStackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         firstStackView.isLayoutMarginsRelativeArrangement = true
         
-        /*firstStackView.layer.borderWidth = 2
-        firstStackView.layer.cornerRadius = 12
+        /*
         firstStackView.backgroundColor = UIColor { traitCollection in
             return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
-        }
+        
         
         firstStackView.layer.borderColor = UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0).cgColor*/
         
+        firstStackView.layer.borderWidth = 2
+        firstStackView.layer.cornerRadius = 12
         firstStackView.addArrangedSubview(maxTempLabel)
         firstStackView.addArrangedSubview(minTempLabel)
         maxTempLabel.textAlignment = .center

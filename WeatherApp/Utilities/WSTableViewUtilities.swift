@@ -33,6 +33,10 @@ extension WeatherScreenVC: UITableViewDelegate, UITableViewDataSource {
         let dailyWeatherVC = DailyWeatherScreenVC()
         dailyWeatherVC.viewModel.dayWeather = viewModel.days[indexPath.row]
         dailyWeatherVC.modalPresentationStyle = .pageSheet
+        
+        if let sheet = dailyWeatherVC.sheetPresentationController {
+            sheet.detents = [.medium()] 
+            }
             
             self.present(dailyWeatherVC, animated: true, completion: nil)
     }

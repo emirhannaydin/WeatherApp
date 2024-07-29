@@ -343,7 +343,6 @@ extension WeatherScreenVC: WeatherVCInterface {
             if let favoriteCities = defaults.stringArray(forKey: "favoriteCities"){
                 if let cityName = self.cityLabel.text {
                     if favoriteCities.contains(cityName) {
-                        print("\(cityName) array içinde bulunuyor.")
                         self.favoriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                         
                     }

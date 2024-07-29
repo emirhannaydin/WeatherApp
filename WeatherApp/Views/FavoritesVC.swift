@@ -12,8 +12,6 @@ class FavoritesVC: UIViewController {
     let tableView = UITableView()
     var favoritesCity = [String]()
 
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()

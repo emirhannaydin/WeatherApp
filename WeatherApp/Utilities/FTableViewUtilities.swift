@@ -11,6 +11,7 @@ import CoreLocation
 
 extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return favoritesCity.count
     }
@@ -18,6 +19,7 @@ extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FTableViewCell.identifier, for: indexPath) as! FTableViewCell
         let city = favoritesCity[indexPath.row]
+
         
         cell.cityLabel.text = city
         

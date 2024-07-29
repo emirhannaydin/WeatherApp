@@ -15,6 +15,8 @@ protocol DailyWeatherVCInterface: AnyObject {
     func prepareThirdStackView()
     func changeImage(data: Data)
     func presentAlertOnMainThread(title: String, message: String, buttonTitle: String)
+    func prepareHumidityStackView()
+    func prepareFeelsLikeStackView()
 
 }
 
@@ -37,6 +39,7 @@ final class DailyWeatherScreenVC: UIViewController {
     let secondStackView = UIStackView()
     let thirdStackView = UIStackView()
     let humidityStackView = UIStackView()
+    let feelsLikeStackView = UIStackView()
     
 
 
@@ -52,71 +55,45 @@ final class DailyWeatherScreenVC: UIViewController {
     
     func configureViews(){
         view.backgroundColor = UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 248/255, blue: 255/255, alpha: 1.0)
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 175/255, green: 222/255, blue: 255/255, alpha: 0.9)
         }
         
         view.addSubview(dayTimeLabel)
-        view.addSubview(celciusLabel)
         view.addSubview(iconStackView)
         view.addSubview(firstStackView)
         view.addSubview(secondStackView)
         view.addSubview(thirdStackView)
-        view.addSubview(gif)
-        
-        dayTimeLabel.layer.borderWidth = 2
-        iconStackView.layer.borderWidth = 2
-        celciusLabel.layer.borderWidth = 2
-        
-        dayTimeLabel.layer.borderColor = UIColor.white.cgColor
-        iconStackView.layer.borderColor = UIColor.white.cgColor
-        celciusLabel.layer.borderColor = UIColor.white.cgColor
-        
-        dayTimeLabel.layer.cornerRadius = 12
-        iconStackView.layer.cornerRadius = 12
-        celciusLabel.layer.cornerRadius = 12
         
         dayTimeLabel.translatesAutoresizingMaskIntoConstraints = false
-        celciusLabel.translatesAutoresizingMaskIntoConstraints = false
         iconStackView.translatesAutoresizingMaskIntoConstraints = false
         firstStackView.translatesAutoresizingMaskIntoConstraints = false
         secondStackView.translatesAutoresizingMaskIntoConstraints = false
         thirdStackView.translatesAutoresizingMaskIntoConstraints = false
-        gif.translatesAutoresizingMaskIntoConstraints = false
         
         
         
         NSLayoutConstraint.activate([
-            dayTimeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            dayTimeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             dayTimeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             dayTimeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             dayTimeLabel.heightAnchor.constraint(equalToConstant: 50),
             
-            celciusLabel.topAnchor.constraint(equalTo: dayTimeLabel.bottomAnchor, constant: 20),
-            celciusLabel.centerXAnchor.constraint(equalTo: dayTimeLabel.centerXAnchor),
-            celciusLabel.heightAnchor.constraint(equalToConstant: 50),
-            celciusLabel.widthAnchor.constraint(equalToConstant: 80),
+            firstStackView.topAnchor.constraint(equalTo: dayTimeLabel.bottomAnchor, constant: 5),
+            firstStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            firstStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            firstStackView.heightAnchor.constraint(equalToConstant: 50),
             
-            iconStackView.topAnchor.constraint(equalTo: celciusLabel.bottomAnchor, constant: 20),
+            iconStackView.topAnchor.constraint(equalTo: firstStackView.bottomAnchor, constant: 5),
             iconStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             iconStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             iconStackView.heightAnchor.constraint(equalToConstant: 50),
             
-            gif.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-            gif.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            gif.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            gif.bottomAnchor.constraint(equalTo: firstStackView.topAnchor, constant: -30),
-            
-            firstStackView.topAnchor.constraint(equalTo: iconStackView.bottomAnchor, constant: 60),
-            firstStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            firstStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            firstStackView.heightAnchor.constraint(equalToConstant: 120),
-            
-            secondStackView.topAnchor.constraint(equalTo: firstStackView.bottomAnchor, constant: 20),
+            secondStackView.topAnchor.constraint(equalTo: iconStackView.bottomAnchor, constant: 5),
             secondStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             secondStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             secondStackView.heightAnchor.constraint(equalToConstant: 120),
             
-            thirdStackView.topAnchor.constraint(equalTo: secondStackView.bottomAnchor, constant: 20),
+            thirdStackView.topAnchor.constraint(equalTo: secondStackView.bottomAnchor, constant: 5),
             thirdStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             thirdStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             thirdStackView.heightAnchor.constraint(equalToConstant: 120),
@@ -126,40 +103,15 @@ final class DailyWeatherScreenVC: UIViewController {
         ])
         
         gif.layer.zPosition = -1
-        gif.alpha = 0.3
-    }
-   
-    
-    func getGIF(icon: String){
-        
-        switch icon{
-        case "01d":
-            gif.loadGif(name: "clearSky")
-        case "02d":
-            gif.loadGif(name: "fewClouds")
-        case "03d":
-            gif.loadGif(name: "fewClouds")
-        case "04d":
-            gif.loadGif(name: "fewClouds")
-        case "09d":
-            gif.loadGif(name: "rainy")
-        case "10d":
-            gif.loadGif(name: "rainy")
-        case "11d":
-            gif.loadGif(name: "thunderstorm")
-        case "13d":
-            gif.loadGif(name: "snow")
-        case "50d":
-            gif.loadGif(name: "mist")
-        default:
-            gif.loadGif(name: "clearSky")
-        }
+        gif.alpha = 0
     }
     
     
 }
 
 extension DailyWeatherScreenVC: DailyWeatherVCInterface {
+    
+    
     func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
         DispatchQueue.main.async {
             let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -176,21 +128,77 @@ extension DailyWeatherScreenVC: DailyWeatherVCInterface {
         
         dateFormatter.dateFormat = "EEEE, dd/MM/yyyy"
         let formattedDate = dateFormatter.string(from: date)
+        dayTimeLabel.font = UIFont.systemFont(ofSize: 18, weight: .black)
 
         dayTimeLabel.text = formattedDate
         celciusLabel.text = "\(Int(weather.temp.day))°C"
         minTempLabel.text = "Min: \(Int(weather.temp.min))°C"
         maxTempLabel.text = "Max: \(Int(weather.temp.max))°C"
-        humidityParameter.text = "Humidity: \(weather.humidity)%"
-        feelsLikeParameter.text = "Feels Like: \(Int(weather.feels_like.day))°C"
-        windSpeedParameter.text = "Wind Speed: \(weather.wind_speed) m/s"
-        windDirectionParameter.text = "Wind Direction: \(Int(weather.wind_deg))°"
+        humidityParameter.text = "\(weather.humidity)%"
+        feelsLikeParameter.text = "\(Int(weather.feels_like.day))°C"
+        windSpeedParameter.text = "Speed: \(weather.wind_speed) m/s"
+        windDirectionParameter.text = "Direction: \(Int(weather.wind_deg))°"
         logoImageDescription.text = weather.weather.first?.description.capitalized ?? "No description"
 
         if let icon = weather.weather.first?.icon {
             viewModel.getIcon(icon: icon)
-            getGIF(icon: icon)
         }
+    }
+    
+    func prepareHumidityStackView() {
+        let title = UILabel()
+        
+        humidityStackView.addArrangedSubview(title)
+        humidityStackView.addArrangedSubview(humidityParameter)
+     
+        title.text = "༄ HUMIDITY"
+        title.font = UIFont.systemFont(ofSize: 15, weight: .black)
+        title.alpha = 0.6
+        humidityParameter.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+
+        
+        title.translatesAutoresizingMaskIntoConstraints = false
+        humidityParameter.translatesAutoresizingMaskIntoConstraints = false
+        title.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        humidityParameter.heightAnchor.constraint(equalToConstant: 60).isActive = true
+
+        humidityStackView.axis = NSLayoutConstraint.Axis.vertical
+        humidityStackView.distribution = .fill
+        humidityStackView.alignment = .center
+        humidityStackView.spacing = 20
+        humidityStackView.layer.borderWidth = 2
+        humidityStackView.layer.cornerRadius = 12
+        humidityStackView.backgroundColor = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
+        }
+        humidityStackView.layer.borderColor = UIColor(red: 90/255, green: 178/255, blue: 255/255, alpha: 0.9).cgColor
+    }
+    
+    func prepareFeelsLikeStackView() {
+        let title = UILabel()
+        feelsLikeStackView.addArrangedSubview(title)
+        feelsLikeStackView.addArrangedSubview(feelsLikeParameter)
+        
+        title.text = "♨ FEELS LIKE"
+        title.font = UIFont.systemFont(ofSize: 15, weight: .black)
+        title.alpha = 0.6
+        feelsLikeParameter.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        
+        title.translatesAutoresizingMaskIntoConstraints = false
+        feelsLikeParameter.translatesAutoresizingMaskIntoConstraints = false
+        title.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        feelsLikeParameter.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        feelsLikeStackView.axis = NSLayoutConstraint.Axis.vertical
+        feelsLikeStackView.distribution = .fill
+        feelsLikeStackView.alignment = .center
+        feelsLikeStackView.spacing = 20.0
+        feelsLikeStackView.layer.borderWidth = 2
+        feelsLikeStackView.layer.cornerRadius = 12
+        feelsLikeStackView.backgroundColor = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
+        }
+        feelsLikeStackView.layer.borderColor = UIColor(red: 90/255, green: 178/255, blue: 255/255, alpha: 0.9).cgColor
     }
     
     func prepareFirstStackView() {
@@ -198,84 +206,70 @@ extension DailyWeatherScreenVC: DailyWeatherVCInterface {
         firstStackView.distribution = .fillEqually
         firstStackView.alignment = .center
         firstStackView.spacing = 15
-        firstStackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         firstStackView.isLayoutMarginsRelativeArrangement = true
         
-        /*
-        firstStackView.backgroundColor = UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
+        minTempLabel.font = UIFont.systemFont(ofSize: 30, weight: .heavy)
+        
+        maxTempLabel.font = UIFont.systemFont(ofSize: 30, weight: .heavy)
         
         
-        firstStackView.layer.borderColor = UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0).cgColor*/
+
         
-        firstStackView.layer.borderWidth = 2
-        firstStackView.layer.cornerRadius = 12
+        
         firstStackView.addArrangedSubview(maxTempLabel)
         firstStackView.addArrangedSubview(minTempLabel)
         maxTempLabel.textAlignment = .center
         minTempLabel.textAlignment = .center
-        minTempLabel.font = UIFont.systemFont(ofSize: 30, weight: .black)
-        maxTempLabel.font = UIFont.systemFont(ofSize: 30, weight: .black)
-        maxTempLabel.textColor = .systemOrange
-        minTempLabel.textColor = .systemCyan
         
-
+        firstStackView.layer.backgroundColor = UIColor(red: 90/255, green: 178/255, blue: 255/255, alpha: 0.9).cgColor
+        
+        
     }
     
     func prepareSecondStackView() {
-        secondStackView.axis = NSLayoutConstraint.Axis.vertical
+        secondStackView.axis = NSLayoutConstraint.Axis.horizontal
         secondStackView.distribution = .fillEqually
         secondStackView.alignment = .center
         secondStackView.spacing = 15
         secondStackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         secondStackView.isLayoutMarginsRelativeArrangement = true
         
-        /*secondStackView.layer.borderWidth = 2
-        secondStackView.layer.cornerRadius = 12
-        secondStackView.backgroundColor = UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
-        }
-        
-        secondStackView.layer.borderColor = UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0).cgColor*/
-        
-        secondStackView.addArrangedSubview(humidityParameter)
-        secondStackView.addArrangedSubview(feelsLikeParameter)
-        
-        humidityParameter.textAlignment = .center
-        feelsLikeParameter.textAlignment = .center
-        humidityParameter.font = UIFont.systemFont(ofSize: 30, weight: .black)
-        feelsLikeParameter.font = UIFont.systemFont(ofSize: 30, weight: .black)
-        humidityParameter.textColor = .systemCyan
-        feelsLikeParameter.textColor = .systemOrange
+        secondStackView.addArrangedSubview(humidityStackView)
+        secondStackView.addArrangedSubview(feelsLikeStackView)
         
     }
     
     func prepareThirdStackView() {
-        thirdStackView.axis = NSLayoutConstraint.Axis.vertical
-        thirdStackView.distribution = .fillEqually
-        thirdStackView.alignment = .center
-        thirdStackView.spacing = 20
-        thirdStackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
-        thirdStackView.isLayoutMarginsRelativeArrangement = true
-        
-        thirdStackView.layer.borderWidth = 2
-        thirdStackView.layer.cornerRadius = 12
-        thirdStackView.backgroundColor = UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 115/255, green: 255/255, blue: 251/255, alpha: 1.0)
-        }
-        
-        thirdStackView.layer.borderColor = UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0).cgColor
-        
+        let title = UILabel()
+        thirdStackView.addArrangedSubview(title)
         thirdStackView.addArrangedSubview(windSpeedParameter)
         thirdStackView.addArrangedSubview(windDirectionParameter)
         
-        windSpeedParameter.textAlignment = .center
-        windDirectionParameter.textAlignment = .center
-        windSpeedParameter.font = UIFont.systemFont(ofSize: 30, weight: .black)
-        windDirectionParameter.font = UIFont.systemFont(ofSize: 30, weight: .black)
+        title.text = "💨 WIND"
+        title.font = UIFont.systemFont(ofSize: 15, weight: .black)
+        title.alpha = 0.6
+        windSpeedParameter.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        windDirectionParameter.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+
         
-        windSpeedParameter.textColor = .systemGray
-        windDirectionParameter.textColor = .systemIndigo
+        title.translatesAutoresizingMaskIntoConstraints = false
+        windSpeedParameter.translatesAutoresizingMaskIntoConstraints = false
+        windDirectionParameter.translatesAutoresizingMaskIntoConstraints = false
+        
+        title.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        windSpeedParameter.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        windDirectionParameter.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        thirdStackView.axis = NSLayoutConstraint.Axis.vertical
+        thirdStackView.distribution = .fill
+        thirdStackView.alignment = .center
+        thirdStackView.spacing = 10.0
+        thirdStackView.layer.borderWidth = 2
+        thirdStackView.layer.cornerRadius = 12
+        thirdStackView.backgroundColor = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
+        }
+        thirdStackView.layer.borderColor = UIColor(red: 90/255, green: 178/255, blue: 255/255, alpha: 0.9).cgColor
     }
     
     
@@ -293,6 +287,13 @@ extension DailyWeatherScreenVC: DailyWeatherVCInterface {
         iconStackView.addArrangedSubview(logoImage)
         iconStackView.addArrangedSubview(logoImageDescription)
         logoImage.contentMode = .scaleAspectFit
+        
+        iconStackView.layer.borderWidth = 2
+        iconStackView.layer.cornerRadius = 12
+        iconStackView.backgroundColor = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
+        }
+        iconStackView.layer.borderColor = UIColor(red: 90/255, green: 178/255, blue: 255/255, alpha: 0.9).cgColor
     }
     
     

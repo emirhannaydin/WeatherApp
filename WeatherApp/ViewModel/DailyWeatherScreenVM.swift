@@ -44,6 +44,8 @@ extension DailyWeatherScreenVM: DailyVMInterface {
         view?.prepareSecondStackView()
         view?.prepareThirdStackView()
         view?.prepareViewWithWeather(weather: dayWeather!)
+        view?.prepareHumidityStackView()
+        view?.prepareFeelsLikeStackView()
     }
     
     

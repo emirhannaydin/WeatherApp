@@ -91,6 +91,8 @@ class SearchVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, 
         ])
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
+        
+        
     }
     
     @objc func centerToUserLocation() {

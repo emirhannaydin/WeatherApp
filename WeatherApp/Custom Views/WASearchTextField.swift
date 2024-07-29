@@ -22,10 +22,15 @@ class WASearchTextField: UITextField {
         
         
         placeholder = "Search"
+        backgroundColor = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark ? UIColor(red: 0/255, green: 0/255, blue: 240/255, alpha: 0.8) : UIColor(red: 255/255, green: 255/255, blue: 240/255, alpha: 0.8)
+        }
         textAlignment = .center
-        backgroundColor = UIColor.white.withAlphaComponent(0.8)
+        textColor = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark ? .white : UIColor.black
+        }
         
-        borderStyle = .none
+        
         layer.borderWidth = 1
         layer.borderColor = UIColor.lightGray.cgColor
         layer.cornerRadius = 10

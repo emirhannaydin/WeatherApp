@@ -27,12 +27,11 @@ class WACircularButton: UIButton {
     
     private func configure() {
        tintColor = .systemBlue
-       backgroundColor = .white
+       backgroundColor = .systemBackground
        layer.cornerRadius = 25
-       layer.shadowColor = UIColor.black.cgColor
-       layer.shadowOpacity = 0.25
+       layer.shadowColor = UIColor.blue.cgColor
+       layer.shadowOpacity = 0.5
        layer.shadowOffset = CGSize(width: 0, height: 2)
-       layer.shadowRadius = 2
     }
     
 }

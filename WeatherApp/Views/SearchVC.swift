@@ -93,7 +93,7 @@ final class SearchVC: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         view.addGestureRecognizer(tapGesture)
         
         searchTextField.textColor = UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
+            return traitCollection.userInterfaceStyle == .dark ? .white : UIColor.black
         }
     }
     

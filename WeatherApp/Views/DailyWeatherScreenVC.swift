@@ -40,6 +40,8 @@ final class DailyWeatherScreenVC: UIViewController {
     let thirdStackView = UIStackView()
     let humidityStackView = UIStackView()
     let feelsLikeStackView = UIStackView()
+    let scrollView = UIScrollView()
+    let contentView = UIView()
     
 
 
@@ -57,13 +59,16 @@ final class DailyWeatherScreenVC: UIViewController {
         view.backgroundColor = UIColor { traitCollection in
             return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 175/255, green: 222/255, blue: 255/255, alpha: 0.9)
         }
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(dayTimeLabel)
+        contentView.addSubview(iconStackView)
+        contentView.addSubview(firstStackView)
+        contentView.addSubview(secondStackView)
+        contentView.addSubview(thirdStackView)
         
-        view.addSubview(dayTimeLabel)
-        view.addSubview(iconStackView)
-        view.addSubview(firstStackView)
-        view.addSubview(secondStackView)
-        view.addSubview(thirdStackView)
-        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         dayTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         iconStackView.translatesAutoresizingMaskIntoConstraints = false
         firstStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,30 +78,41 @@ final class DailyWeatherScreenVC: UIViewController {
         
         
         NSLayoutConstraint.activate([
-            dayTimeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            dayTimeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            dayTimeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+
+            dayTimeLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 20),
+            dayTimeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            dayTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             dayTimeLabel.heightAnchor.constraint(equalToConstant: 50),
             
             firstStackView.topAnchor.constraint(equalTo: dayTimeLabel.bottomAnchor, constant: 5),
-            firstStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            firstStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            firstStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            firstStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             firstStackView.heightAnchor.constraint(equalToConstant: 50),
             
             iconStackView.topAnchor.constraint(equalTo: firstStackView.bottomAnchor, constant: 5),
-            iconStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            iconStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            iconStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            iconStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             iconStackView.heightAnchor.constraint(equalToConstant: 50),
             
             secondStackView.topAnchor.constraint(equalTo: iconStackView.bottomAnchor, constant: 5),
-            secondStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            secondStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            secondStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            secondStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             secondStackView.heightAnchor.constraint(equalToConstant: 120),
             
             thirdStackView.topAnchor.constraint(equalTo: secondStackView.bottomAnchor, constant: 5),
-            thirdStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            thirdStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            thirdStackView.heightAnchor.constraint(equalToConstant: 120),
+            thirdStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            thirdStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            thirdStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
             
             
             

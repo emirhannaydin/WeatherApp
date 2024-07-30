@@ -35,6 +35,7 @@ class WSTableViewCell: UITableViewCell {
         let date = Date(timeIntervalSince1970: TimeInterval(model.dt))
         
         if Calendar.current.isDateInToday(date) {
+            print("burdayım")
             dayLabel.text = "Today"
             if dayLabel.text == "Today"{
                 dayLabel.textColor = UIColor.systemBlue

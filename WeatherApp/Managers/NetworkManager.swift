@@ -7,11 +7,10 @@
 
 import Foundation
 import CoreLocation
-import UIKit
 
 class NetworkManager {
     static let shared = NetworkManager()
-    let baseURL = "https://api.openweathermap.org/data/3.0/"
+    let baseURL = "https://api.openweathermap.org/data/2.5/"
     let reverseGeocodeURL = "https://api.openweathermap.org/geo/1.0/reverse"
     let viewController = WeatherScreenVC()
     

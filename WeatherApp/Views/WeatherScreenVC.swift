@@ -68,7 +68,7 @@ final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
-
+        
         updateFavoriteButtonState()
         animation.removeFromSuperview()
     }

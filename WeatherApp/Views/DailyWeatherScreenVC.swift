@@ -21,7 +21,7 @@ protocol DailyWeatherVCInterface: AnyObject {
 }
 
 final class DailyWeatherScreenVC: UIViewController {
-    public lazy var viewModel = DailyWeatherScreenVM()
+    lazy var viewModel = DailyWeatherScreenVM()
     
     let gif = UIImageView()
     let dayTimeLabel = WALabel(textAlignment: .center)

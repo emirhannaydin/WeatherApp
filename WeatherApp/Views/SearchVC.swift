@@ -107,8 +107,6 @@ final class SearchVC: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     @objc func dismissKeyboard() {
            view.endEditing(true)
        }
-
-  
     
     // MARK: - UITextFieldDelegate
     
@@ -116,7 +114,7 @@ final class SearchVC: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             textField.resignFirstResponder()
             
             guard let searchText = textField.text, !searchText.isEmpty else {
-                self.presentAlertOnMainThread(title: "Error", message: "You entered empty text", buttonTitle: "OK")
+                self.presentAlert(title: "Error", message: "You entered empty text", buttonTitle: "OK")
                 return true
             }
             
@@ -124,7 +122,7 @@ final class SearchVC: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             geocoder.geocodeAddressString(searchText) { (placemarks, error) in
                 if let error = error {
                     print("Geocoding error: \(error.localizedDescription)")
-                    self.presentAlertOnMainThread(title: "Error", message: "City name could not be found.", buttonTitle: "OK")
+                    self.presentAlert(title: "Error", message: "City name could not be found.", buttonTitle: "OK")
                     return
                 }
                 
@@ -169,14 +167,6 @@ final class SearchVC: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             let characterSet = CharacterSet(charactersIn: string)
             return allowedCharacters.isSuperset(of: characterSet)
         }
-    
-    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
-        DispatchQueue.main.async {
-            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: buttonTitle, style: .default))
-            self.present(alertVC, animated: true)
-        }
-    }
 
 
 }

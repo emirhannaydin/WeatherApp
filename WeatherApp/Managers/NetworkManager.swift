@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreLocation
 
 final class NetworkManager {
     static let shared = NetworkManager()
@@ -21,28 +20,28 @@ final class NetworkManager {
         
         guard let url = URL(string: endpoint) else {
             completed(nil, .invalidURL)
-            viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
+            viewController.presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
             return
         }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if error != nil {
                 completed(nil, .unableToComplete)
-                self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
+                self.viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
                 return
                 
             }
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                 completed(nil, .invalidResponse)
-                self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
+                self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
 
                 return
             }
             
             guard let data = data else {
                 completed(nil, .invalidData)
-                self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
+                self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
 
                 return
             }
@@ -53,7 +52,7 @@ final class NetworkManager {
                 completed(weatherData, nil)
             } catch {
                 completed(nil, .decodingError)
-                self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
+                self.viewController.presentAlert(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
             }
         }
         print(url)
@@ -66,25 +65,25 @@ final class NetworkManager {
         
         guard let url = URL(string: endpoint) else {
             completed(nil, .invalidURL)
-            self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
+            self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
             return
         }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if error != nil {
                 completed(nil, .unableToComplete)
-                self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
+                self.viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
                 return
             }
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                 completed(nil, .invalidResponse)
-                self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
+                self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
                 return
             }
             
             guard let data = data else {
-                self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
+                self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
                 return
             }
             
@@ -95,11 +94,11 @@ final class NetworkManager {
                     completed(city, nil)
                 } else {
                     completed(nil, .decodingError)
-                    self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
+                    self.viewController.presentAlert(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
                 }
             } catch {
                 completed(nil, .decodingError)
-                self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
+                self.viewController.presentAlert(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
             }
         }
         task.resume()
@@ -112,7 +111,7 @@ final class NetworkManager {
                 if error != nil {
                     completion(nil, .unableToComplete)
                     DispatchQueue.main.async {
-                        self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
+                        self.viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
                     }
                     return
                 }
@@ -120,7 +119,7 @@ final class NetworkManager {
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                     completion(nil, .invalidResponse)
                     DispatchQueue.main.async {
-                        self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
+                        self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
                     }
                     return
                 }
@@ -128,7 +127,7 @@ final class NetworkManager {
                 guard let data = data else {
                     completion(nil, .invalidData)
                     DispatchQueue.main.async {
-                        self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
+                        self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
                     }
                     return
                 }
@@ -139,7 +138,7 @@ final class NetworkManager {
         } else {
             completion(nil, .invalidURL)
             DispatchQueue.main.async {
-                self.viewController.presentAlertOnMainThread(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
+                self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
             }
         }
         

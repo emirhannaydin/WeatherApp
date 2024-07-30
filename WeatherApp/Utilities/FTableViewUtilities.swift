@@ -27,14 +27,14 @@ extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
             NetworkManager.shared.getWeather(latitude: coordinates.latitude, longitude: coordinates.longitude, apiKey: LoginScreenVC.apiTextField.text ?? "") { [weak self] weatherData, errorMessage in
                 if let errorMessage = errorMessage {
                     DispatchQueue.main.async {
-                        self?.presentAlertOnMainThread(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
+                        self?.presentAlert(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
                     }
                     return
                 }
                 
                 guard let weatherData = weatherData else {
                     DispatchQueue.main.async {
-                        self?.presentAlertOnMainThread(title: "Error", message: "No weather data found.", buttonTitle: "OK")
+                        self?.presentAlert(title: "Error", message: "No weather data found.", buttonTitle: "OK")
                     }
                     return
                 }

@@ -174,7 +174,7 @@ final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         let message = "Failed to get user location: \(error.localizedDescription)"
-        presentAlertOnMainThread(title: "Error", message: message, buttonTitle: "OK")
+        presentAlert(title: "Error", message: message, buttonTitle: "OK")
     }
     
     func configureViews() {

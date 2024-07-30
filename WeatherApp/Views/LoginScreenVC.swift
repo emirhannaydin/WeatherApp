@@ -32,7 +32,7 @@ final class LoginScreenVC: UIViewController, UITextFieldDelegate {
     
     @objc func pushWeatherScreenVC() {
         guard let apiKey = LoginScreenVC.apiTextField.text, !apiKey.isEmpty else {
-            self.presentAlertOnMainThread(title: "Error", message: "API key is empty", buttonTitle: "OK")
+            self.presentAlert(title: "Error", message: "API key is empty", buttonTitle: "OK")
             return
         }
 
@@ -95,18 +95,20 @@ final class LoginScreenVC: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
     }
 
-    
-    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
-        DispatchQueue.main.async {
-            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: buttonTitle, style: .default))
-            self.present(alertVC, animated: true)
-        }
-    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         pushWeatherScreenVC()
         return true
+    }
+}
+
+extension UIViewController {
+    func presentAlert(title: String, message: String, buttonTitle: String) {
+        DispatchQueue.main.async {
+            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: buttonTitle, style: .default))
+            self.present(alertVC, animated: true, completion: nil)
+        }
     }
 }
 

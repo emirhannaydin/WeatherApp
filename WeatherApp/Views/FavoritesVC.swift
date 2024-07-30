@@ -44,13 +44,6 @@ final class FavoritesVC: UIViewController {
 
     }
     
-    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
-        DispatchQueue.main.async {
-            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: buttonTitle, style: .default))
-            self.present(alertVC, animated: true)
-        }
-    }
     
     
 }

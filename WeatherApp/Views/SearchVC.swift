@@ -10,7 +10,7 @@ import MapKit
 import CoreLocation
 
 
-class SearchVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextFieldDelegate {
+final class SearchVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UITextFieldDelegate {
     
     let mapView: MKMapView = {
         let map = MKMapView()

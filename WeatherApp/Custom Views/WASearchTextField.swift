@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WASearchTextField: UITextField {
+final class WASearchTextField: UITextField {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

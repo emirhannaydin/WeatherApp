@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-class NetworkManager {
+final class NetworkManager {
     static let shared = NetworkManager()
     let baseURL = "https://api.openweathermap.org/data/2.5/"
     let reverseGeocodeURL = "https://api.openweathermap.org/geo/1.0/reverse"

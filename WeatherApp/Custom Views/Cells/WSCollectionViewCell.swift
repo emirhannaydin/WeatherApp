@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WSCollectionViewCell: UICollectionViewCell {
+final class WSCollectionViewCell: UICollectionViewCell {
     static let identifier = "HourlyCell"
     
     let hoursLabel = UILabel()

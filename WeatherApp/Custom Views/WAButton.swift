@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WAButton: UIButton {
+final class WAButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WATextField: UITextField {
+final class WATextField: UITextField {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

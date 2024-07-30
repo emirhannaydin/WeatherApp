@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WACircularButton: UIButton {
+final class WACircularButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

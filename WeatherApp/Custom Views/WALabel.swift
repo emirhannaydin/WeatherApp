@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WALabel: UILabel {
+final class WALabel: UILabel {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

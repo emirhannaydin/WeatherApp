@@ -15,7 +15,7 @@
 import UIKit
 import Lottie
 
-class LoginScreenVC: UIViewController, UITextFieldDelegate {
+final class LoginScreenVC: UIViewController, UITextFieldDelegate {
     
     static let apiTextField = WATextField()
     let enterButton = WAButton(backgroundColor: .systemGray, title: "Enter")

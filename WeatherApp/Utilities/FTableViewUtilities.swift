@@ -26,7 +26,6 @@ extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
         if let coordinates = getCoordinates(for: city) {
             NetworkManager.shared.getWeather(latitude: coordinates.latitude, longitude: coordinates.longitude, apiKey: LoginScreenVC.apiTextField.text ?? "") { [weak self] weatherData, errorMessage in
                 if let errorMessage = errorMessage {
-                    print("Error: \(errorMessage.rawValue)")
                     DispatchQueue.main.async {
                         self?.presentAlertOnMainThread(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
                     }

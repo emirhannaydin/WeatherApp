@@ -23,7 +23,7 @@ protocol WeatherVCInterface: AnyObject {
     func changeUI(weather: Weather, lat: Double, lon: Double)
     func changeCityLabel(city: City)
     func changeImage(data: Data)
-    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String)
+    func presentAlertOnViewModel(title: String, message: String, buttonTitle: String)
     func changeGIF(icon: String)
 }
 
@@ -321,7 +321,7 @@ extension WeatherScreenVC: WeatherVCInterface {
     }
     
     
-    func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
+    func presentAlertOnViewModel(title: String, message: String, buttonTitle: String) {
         DispatchQueue.main.async {
             let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: buttonTitle, style: .default))

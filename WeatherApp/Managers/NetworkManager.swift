@@ -7,141 +7,162 @@
 
 import Foundation
 
+import Alamofire
+
 final class NetworkManager {
     static let shared = NetworkManager()
     let baseURL = "https://api.openweathermap.org/data/2.5/"
-    let reverseGeocodeURL = "https://api.openweathermap.org/geo/1.0/reverse"
+    let reverseGeocodeURL = "https://api.openweathermap.org/geo/1.0/"
+    let iconURL = "https://openweathermap.org/img/wn/"
     let viewController = WeatherScreenVC()
     
     private init() {}
     
     func getWeather(latitude: Double, longitude: Double, apiKey: String, completed: @escaping (Weather?, ErrorMessage?) -> Void) {
-        let endpoint = baseURL + "onecall?lat=\(latitude)&lon=\(longitude)&units=metric&appid=\(apiKey)"
+        let endpoint = baseURL + "onecall"
+        let parameters: [String: Any] = [
+            "lat": latitude,
+            "lon": longitude,
+            "units": "metric",
+            "appid": apiKey
+        ]
         
         guard let url = URL(string: endpoint) else {
             completed(nil, .invalidURL)
             viewController.presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
+            
             return
         }
         
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if error != nil {
-                completed(nil, .unableToComplete)
-                self.viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
-                return
+        AF.request(url, parameters: parameters).responseDecodable(of: Weather.self) { [self] response in
+            switch response.result {
+            case .success(let weatherData):
                 
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completed(nil, .invalidResponse)
-                self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
+                if weatherData.daily.isEmpty && weatherData.hourly.isEmpty {
+                    completed(nil, .invalidData)
+                    viewController.presentAlert(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
 
-                return
-            }
-            
-            guard let data = data else {
-                completed(nil, .invalidData)
-                self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
+                } else {
+                    completed(weatherData, nil)
+                }
+            case .failure(_):
+                
+                if let httpStatusCode = response.response?.statusCode {
+                    
+                    switch httpStatusCode {
+                    case 404:
+                        completed(nil, .invalidResponse)
+                        viewController.presentAlert(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
 
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let weatherData = try decoder.decode(Weather.self, from: data)
-                completed(weatherData, nil)
-            } catch {
-                completed(nil, .decodingError)
-                self.viewController.presentAlert(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
+                    case 500:
+                        completed(nil, .unableToComplete)
+                        viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
+
+                    default:
+                        completed(nil, .unableToComplete)
+                        viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
+
+                    }
+                } else {
+                    completed(nil, .decodingError)
+                    viewController.presentAlert(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
+
+                }
             }
         }
-        print(url)
-        task.resume()
     }
     
     func getCityName(latitude: Double, longitude: Double, apiKey: String, completed: @escaping (City?, ErrorMessage?) -> Void) {
-        let endpoint = "\(reverseGeocodeURL)?lat=\(latitude)&lon=\(longitude)&limit=1&appid=\(apiKey)"
-        print("Request URL: \(endpoint)")
+        let endpoint = reverseGeocodeURL + "reverse"
+        let parameters: [String: Any] = [
+            "lat": latitude,
+            "lon": longitude,
+            "limit": 1,
+            "appid": apiKey
+        ]
         
         guard let url = URL(string: endpoint) else {
             completed(nil, .invalidURL)
-            self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
+            viewController.presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
+
             return
         }
         
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if error != nil {
-                completed(nil, .unableToComplete)
-                self.viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completed(nil, .invalidResponse)
-                self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
-                return
-            }
-            
-            guard let data = data else {
-                self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let cityData = try decoder.decode([City].self, from: data)
-                if let city = cityData.first {
+        AF.request(url, parameters: parameters).responseDecodable(of: [City].self) { [self] response in
+            switch response.result {
+            case .success(let cityData):
+                if cityData.isEmpty {
+                    completed(nil, .invalidData)
+                    viewController.presentAlert(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
+                } else if let city = cityData.first{
                     completed(city, nil)
+                }
+                
+            case .failure(_):
+                if let httpStatusCode = response.response?.statusCode {
+                    switch httpStatusCode {
+                    case 404:
+                        completed(nil, .invalidResponse)
+                        viewController.presentAlert(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
+
+                    case 500:
+                        completed(nil, .unableToComplete)
+                        viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
+
+                    default:
+                        completed(nil, .unableToComplete)
+                        viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
+
+                    }
                 } else {
                     completed(nil, .decodingError)
-                    self.viewController.presentAlert(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
+                    viewController.presentAlert(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
+
                 }
-            } catch {
-                completed(nil, .decodingError)
-                self.viewController.presentAlert(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
             }
         }
-        task.resume()
     }
-
     
     func getIcon(icon: String, completion: @escaping (Data?, ErrorMessage?) -> Void) {
-        if let url = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png") {
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                if error != nil {
-                    completion(nil, .unableToComplete)
-                    DispatchQueue.main.async {
-                        self.viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
-                    }
-                    return
-                }
-                
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    completion(nil, .invalidResponse)
-                    DispatchQueue.main.async {
-                        self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
-                    }
-                    return
-                }
-                
-                guard let data = data else {
-                    completion(nil, .invalidData)
-                    DispatchQueue.main.async {
-                        self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
-                    }
-                    return
-                }
-                
-                completion(data, nil)
-            }
-            task.resume()
-        } else {
+        let urlString = iconURL + "\(icon)@2x.png"
+        
+        guard let url = URL(string: urlString) else {
             completion(nil, .invalidURL)
-            DispatchQueue.main.async {
-                self.viewController.presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
-            }
+            viewController.presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
+            return
         }
         
-        
+        AF.request(url).responseData { [self] response in
+            switch response.result {
+            case .success(let data):
+                if data.isEmpty {
+                    completion(nil, .invalidData)
+                    viewController.presentAlert(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
+
+                } else {
+                    completion(data, nil)
+                }
+            case .failure(_):
+                if let httpStatusCode = response.response?.statusCode {
+                    switch httpStatusCode {
+                    case 404:
+                        completion(nil, .invalidResponse)
+                        viewController.presentAlert(title: "Error", message: ErrorMessage.invalidResponse.rawValue, buttonTitle: "OK")
+
+                    case 500:
+                        completion(nil, .unableToComplete)
+                        viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
+
+                    default:
+                        completion(nil, .unableToComplete)
+                        viewController.presentAlert(title: "Error", message: ErrorMessage.unableToComplete.rawValue, buttonTitle: "OK")
+                    }
+                } else {
+                    completion(nil, .decodingError)
+                    viewController.presentAlert(title: "Error", message: ErrorMessage.decodingError.rawValue, buttonTitle: "OK")
+                }
+            }
+        }
     }
 }
+

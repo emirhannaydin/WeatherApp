@@ -5,11 +5,16 @@
 //  Created by Emirhan Aydın on 10.07.2024.
 //
 
+protocol WSTableViewCellDelegate: AnyObject {
+    func presentAlert(title: String, message: String, buttonTitle: String)
+}
 import UIKit
 
 final class WSTableViewCell: UITableViewCell {
     static let identifier = "DailyCell"
     
+    weak var delegate: WSTableViewCellDelegate?
+
     
     var dayLabel = UILabel()
     var minTempLabel = UILabel()
@@ -54,17 +59,24 @@ final class WSTableViewCell: UITableViewCell {
     
     
     func getIcon(icon : String){
-        if let url = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png") {
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if let data = data, error == nil {
-                    DispatchQueue.main.async {
-                        self.tempImageView.image = UIImage(data: data)
-                    }
-                }
+        NetworkManager.shared.getIcon(icon: icon) { [weak self] data, errorMessage in
+            
+            if let errorMessage = errorMessage {
+                        DispatchQueue.main.async {
+                            self?.delegate?.presentAlert(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
+                        }
+                        return
             }
-            .resume()
+            if let data = data {
+                DispatchQueue.main.async {
+                    self?.tempImageView.image = UIImage(data: data)
+                        }
+                    }
+                
         }
     }
+    
+    
     
     private func configure(){
         

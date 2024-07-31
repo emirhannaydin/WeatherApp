@@ -35,13 +35,13 @@ final class WeatherScreenVM {
         NetworkManager.shared.getCityName(latitude: latitude, longitude: longitude, apiKey: apiKey) { [weak self] city, errorMessage in
             if let errorMessage = errorMessage {
                 print("Error: \(errorMessage.rawValue)")
-                self?.view?.presentAlertOnMainThread(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
+                self?.view?.presentAlertOnViewModel(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
 
                 return
             }
             
             guard let city = city else {
-                self?.view?.presentAlertOnMainThread(title: "Error", message: "No weather data found.", buttonTitle: "OK")
+                self?.view?.presentAlertOnViewModel(title: "Error", message: "No weather data found.", buttonTitle: "OK")
 
                 return
             }
@@ -58,12 +58,12 @@ final class WeatherScreenVM {
         NetworkManager.shared.getWeather(latitude: latitude, longitude: longitude, apiKey: apiKey) { [weak self] weather, errorMessage in
             if let errorMessage = errorMessage {
                 print("Error: \(errorMessage.rawValue)")
-                self?.view?.presentAlertOnMainThread(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
+                self?.view?.presentAlertOnViewModel(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
                 return
             }
             
             guard let weather = weather else {
-                self?.view?.presentAlertOnMainThread(title: "Error", message: "No weather data found.", buttonTitle: "OK")
+                self?.view?.presentAlertOnViewModel(title: "Error", message: "No weather data found.", buttonTitle: "OK")
                 return
             }
             
@@ -83,7 +83,7 @@ final class WeatherScreenVM {
             
             if let errorMessage = errorMessage {
                         DispatchQueue.main.async {
-                            self?.view?.presentAlertOnMainThread(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
+                            self?.view?.presentAlertOnViewModel(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
                         }
                         return
             }

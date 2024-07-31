@@ -19,8 +19,8 @@ extension WeatherScreenVC: UITableViewDelegate, UITableViewDataSource {
         
         cell.setup(model: model)
         cell.backgroundColor = UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 248/255, blue: 255/255, alpha: 1.0)
-        }
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 169/255, green: 222/255, blue: 249/255, alpha: 1.0)}
+        
         
         return cell
     }
@@ -30,6 +30,8 @@ extension WeatherScreenVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
         let dailyWeatherVC = DailyWeatherScreenVC()
         dailyWeatherVC.viewModel.dayWeather = viewModel.days[indexPath.row]
         dailyWeatherVC.modalPresentationStyle = .pageSheet

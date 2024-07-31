@@ -27,6 +27,7 @@ final class NetworkManager {
             "appid": apiKey
         ]
         
+        
         guard let url = URL(string: endpoint) else {
             completed(nil, .invalidURL)
             viewController.presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")

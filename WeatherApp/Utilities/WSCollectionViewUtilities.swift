@@ -20,11 +20,13 @@ extension WeatherScreenVC: UICollectionViewDataSource, UICollectionViewDelegateF
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WSCollectionViewCell.identifier, for: indexPath) as! WSCollectionViewCell
         let model = viewModel.hours[indexPath.row]
         cell.setup(model: model)
-        cell.layer.borderWidth = 0
         cell.layer.cornerRadius = 12
-        cell.layer.borderColor = UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0).cgColor
 
-        cell.backgroundColor = .systemBackground
+        cell.backgroundColor = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 169/255, green: 222/255, blue: 249/255, alpha: 1.0)}
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.systemBlue.cgColor
+   
 
         
         return cell
@@ -40,19 +42,7 @@ extension WeatherScreenVC: UICollectionViewDataSource, UICollectionViewDelegateF
             return sectionInsets
         }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        // Dark Mode
-        let darkModeBackgroundColor = UIColor.black
-        
-        if let customCell = cell as? WSCollectionViewCell {
-            customCell.backgroundColor = UIColor { traitCollection in
-                return traitCollection.userInterfaceStyle == .dark ? darkModeBackgroundColor : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
-            }
-            
-            // Border rengi
-            customCell.layer.borderColor = traitCollection.userInterfaceStyle == .dark ? UIColor.white.cgColor : UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0).cgColor
-            }
-        }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
     }

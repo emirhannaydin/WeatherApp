@@ -180,7 +180,7 @@ final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
     func configureViews() {
         
         view.backgroundColor = UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 248/255, blue: 255/255, alpha: 1.0)}
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 169/255, green: 222/255, blue: 249/255, alpha: 1.0)}
         
         favoriteButton.addTarget(self, action: #selector(changeFavoriteButton), for: .touchUpInside)
 
@@ -280,6 +280,7 @@ final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
             thirdParameterStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             thirdParameterStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+        
     }
     
     func stopIndicator() {
@@ -416,18 +417,21 @@ extension WeatherScreenVC: WeatherVCInterface {
         title.translatesAutoresizingMaskIntoConstraints = false
         humidityParameter.translatesAutoresizingMaskIntoConstraints = false
         title.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        title.topAnchor.constraint(equalTo: firstParameterStackView.topAnchor, constant: 10).isActive = true
         humidityParameter.heightAnchor.constraint(equalToConstant: 60).isActive = true
 
         firstParameterStackView.axis = NSLayoutConstraint.Axis.vertical
         firstParameterStackView.distribution = .fill
         firstParameterStackView.alignment = .center
         firstParameterStackView.spacing = 20
-        firstParameterStackView.layer.borderWidth = 2
         firstParameterStackView.layer.cornerRadius = 12
         firstParameterStackView.backgroundColor = UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
-        }
-        firstParameterStackView.layer.borderColor = UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0).cgColor
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 169/255, green: 222/255, blue: 249/255, alpha: 1.0)}
+        firstParameterStackView.layer.shadowColor = UIColor.systemBlue.cgColor
+        firstParameterStackView.layer.shadowOpacity = 0.35
+        firstParameterStackView.layer.shadowOffset = CGSize(width: 0, height: 7)
+        
+       
 
         
     }
@@ -445,18 +449,20 @@ extension WeatherScreenVC: WeatherVCInterface {
         title.translatesAutoresizingMaskIntoConstraints = false
         feelsLikeParameter.translatesAutoresizingMaskIntoConstraints = false
         title.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        title.topAnchor.constraint(equalTo: secondParameterStackView.topAnchor, constant: 10).isActive = true
+
         feelsLikeParameter.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         secondParameterStackView.axis = NSLayoutConstraint.Axis.vertical
         secondParameterStackView.distribution = .fill
         secondParameterStackView.alignment = .center
         secondParameterStackView.spacing = 20.0
-        secondParameterStackView.layer.borderWidth = 2
         secondParameterStackView.layer.cornerRadius = 12
         secondParameterStackView.backgroundColor = UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
-        }
-        secondParameterStackView.layer.borderColor = UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0).cgColor
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 169/255, green: 222/255, blue: 249/255, alpha: 1.0)}
+        secondParameterStackView.layer.shadowColor = UIColor.systemBlue.cgColor
+        secondParameterStackView.layer.shadowOpacity = 0.35
+        secondParameterStackView.layer.shadowOffset = CGSize(width: 0, height: 7)
       
     }
     
@@ -478,6 +484,8 @@ extension WeatherScreenVC: WeatherVCInterface {
         windDirectionParameter.translatesAutoresizingMaskIntoConstraints = false
         
         title.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        title.topAnchor.constraint(equalTo: thirdParameterStackView.topAnchor, constant: 10).isActive = true
+
         windSpeedParameter.heightAnchor.constraint(equalToConstant: 40).isActive = true
         windDirectionParameter.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
@@ -485,12 +493,13 @@ extension WeatherScreenVC: WeatherVCInterface {
         thirdParameterStackView.distribution = .fill
         thirdParameterStackView.alignment = .center
         thirdParameterStackView.spacing = 10.0
-        thirdParameterStackView.layer.borderWidth = 2
         thirdParameterStackView.layer.cornerRadius = 12
         thirdParameterStackView.backgroundColor = UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 238/255, green: 255/255, blue: 251/255, alpha: 1.0)
-        }
-        thirdParameterStackView.layer.borderColor = UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0).cgColor
+            return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 169/255, green: 222/255, blue: 249/255, alpha: 1.0)}
+        thirdParameterStackView.layer.shadowColor = UIColor.systemBlue.cgColor
+        thirdParameterStackView.layer.shadowOpacity = 0.35
+        thirdParameterStackView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        
       
     }
     
@@ -513,7 +522,12 @@ extension WeatherScreenVC: WeatherVCInterface {
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        tableView.separatorColor = UIColor(red: 172/255, green: 255/255, blue: 251/255, alpha: 1.0)
+        tableView.separatorColor = UIColor.white
+        //stableView.layer.borderWidth = 1
+        tableView.layer.cornerRadius = 12
+        tableView.layer.borderColor = UIColor.white.cgColor
+        
+        
     }
     
     func prepareCollectionView() {
@@ -531,6 +545,11 @@ extension WeatherScreenVC: WeatherVCInterface {
             collectionView.showsHorizontalScrollIndicator = false
             collectionView.showsVerticalScrollIndicator = false
             collectionView.decelerationRate = .fast
+            collectionView.backgroundColor = UIColor { traitCollection in
+                return traitCollection.userInterfaceStyle == .dark ? .black : UIColor(red: 169/255, green: 222/255, blue: 249/255, alpha: 1.0)}
+            
+            
+        
             
         
     }

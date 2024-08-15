@@ -8,6 +8,7 @@
 import Foundation
 
 import Alamofire
+import UIKit
 
 final class NetworkManager {
     static let shared = NetworkManager()
@@ -30,7 +31,7 @@ final class NetworkManager {
         
         guard let url = URL(string: endpoint) else {
             completed(nil, .invalidURL)
-            viewController.presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
+            UIViewController().presentAlert(title: "Error", message: ErrorMessage.invalidURL.rawValue, buttonTitle: "OK")
             
             return
         }
@@ -44,6 +45,7 @@ final class NetworkManager {
                     viewController.presentAlert(title: "Error", message: ErrorMessage.invalidData.rawValue, buttonTitle: "OK")
 
                 } else {
+                    print(url)
                     completed(weatherData, nil)
                 }
             case .failure(_):

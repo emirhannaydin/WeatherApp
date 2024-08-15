@@ -33,16 +33,22 @@ final class FTableViewCell: UITableViewCell {
     }
     
     func getIcon(icon : String){
-        if let url = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png") {
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if let data = data, error == nil {
-                    DispatchQueue.main.async {
-                        self.iconDescription.image = UIImage(data: data)
-                    }
-                }
+        NetworkManager.shared.getIcon(icon: icon) { [weak self] data, errorMessage in
+            
+            if let errorMessage = errorMessage {
+                        DispatchQueue.main.async {
+                            print("Error: \(errorMessage.rawValue)")
+                        }
+                        return
             }
-            .resume()
+            if let data = data {
+                DispatchQueue.main.async {
+                    self?.iconDescription.image = UIImage(data: data)
+                        }
+                    }
+                
         }
+
     }
     func configure() {
         contentView.addSubview(cityLabel)

@@ -28,8 +28,6 @@ final class WeatherScreenVM {
     var currentLongitude = Double()
     
    
-    
-    
     func getCityName(latitude: Double, longitude: Double) {
 
         NetworkManager.shared.getCityName(latitude: latitude, longitude: longitude, apiKey: apiKey) { [weak self] city, errorMessage in
@@ -47,6 +45,7 @@ final class WeatherScreenVM {
             }
             
             self?.view?.changeCityLabel(city: city)
+            
 
         }
     }

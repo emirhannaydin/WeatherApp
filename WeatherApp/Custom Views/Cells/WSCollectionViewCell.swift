@@ -11,7 +11,7 @@ final class WSCollectionViewCell: UICollectionViewCell {
     static let identifier = "HourlyCell"
     
     let hoursLabel = UILabel()
-    var weatherIcon = UIImageView()
+    let weatherIcon = UIImageView()
     let degree = UILabel()
     
     override init(frame: CGRect) {

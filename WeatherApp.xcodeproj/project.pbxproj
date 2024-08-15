@@ -26,8 +26,7 @@
 		1E47F93C2C52986B0077A0DF /* favorite.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E47F93B2C52986A0077A0DF /* favorite.json */; };
 		1E47F9602C576B190077A0DF /* FTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E47F95F2C576B190077A0DF /* FTableViewCell.swift */; };
 		1E47F9822C5958030077A0DF /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E47F9812C5958030077A0DF /* AlertManager.swift */; };
-		1E47F9852C5960DD0077A0DF /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1E47F9842C5960DD0077A0DF /* Alamofire */; };
-		1E47F9872C5960DD0077A0DF /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 1E47F9862C5960DD0077A0DF /* AlamofireDynamic */; };
+		1E99F3342C6A49C100E1B6D0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1E99F3332C6A49C100E1B6D0 /* Alamofire */; };
 		1EA4F5AC2C42C4AF00509FFE /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA4F5AB2C42C4AF00509FFE /* City.swift */; };
 		1EB43CB92C3D52CD0008E9C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB43CB82C3D52CD0008E9C5 /* AppDelegate.swift */; };
 		1EB43CBB2C3D52CD0008E9C5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB43CBA2C3D52CD0008E9C5 /* SceneDelegate.swift */; };
@@ -95,8 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E47F92F2C528F600077A0DF /* Lottie in Frameworks */,
-				1E47F9872C5960DD0077A0DF /* AlamofireDynamic in Frameworks */,
-				1E47F9852C5960DD0077A0DF /* Alamofire in Frameworks */,
+				1E99F3342C6A49C100E1B6D0 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,8 +259,7 @@
 			name = WeatherApp;
 			packageProductDependencies = (
 				1E47F92E2C528F600077A0DF /* Lottie */,
-				1E47F9842C5960DD0077A0DF /* Alamofire */,
-				1E47F9862C5960DD0077A0DF /* AlamofireDynamic */,
+				1E99F3332C6A49C100E1B6D0 /* Alamofire */,
 			);
 			productName = WeatherApp;
 			productReference = 1EB43CB52C3D52CD0008E9C5 /* WeatherApp.app */;
@@ -294,7 +291,7 @@
 			mainGroup = 1EB43CAC2C3D52CD0008E9C5;
 			packageReferences = (
 				1E47F92D2C528F600077A0DF /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				1E47F9832C5960DD0077A0DF /* XCRemoteSwiftPackageReference "Alamofire" */,
+				1E99F3322C6A49C000E1B6D0 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 1EB43CB62C3D52CD0008E9C5 /* Products */;
 			projectDirPath = "";
@@ -582,7 +579,7 @@
 				minimumVersion = 4.5.0;
 			};
 		};
-		1E47F9832C5960DD0077A0DF /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		1E99F3322C6A49C000E1B6D0 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
@@ -598,15 +595,10 @@
 			package = 1E47F92D2C528F600077A0DF /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
-		1E47F9842C5960DD0077A0DF /* Alamofire */ = {
+		1E99F3332C6A49C100E1B6D0 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1E47F9832C5960DD0077A0DF /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 1E99F3322C6A49C000E1B6D0 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		1E47F9862C5960DD0077A0DF /* AlamofireDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1E47F9832C5960DD0077A0DF /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = AlamofireDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

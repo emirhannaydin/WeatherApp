@@ -227,10 +227,6 @@ extension DailyWeatherScreenVC: DailyWeatherVCInterface {
         
         maxTempLabel.font = UIFont.systemFont(ofSize: 30, weight: .heavy)
         
-        
-
-        
-        
         firstStackView.addArrangedSubview(maxTempLabel)
         firstStackView.addArrangedSubview(minTempLabel)
         maxTempLabel.textAlignment = .center

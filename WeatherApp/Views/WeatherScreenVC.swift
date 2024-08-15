@@ -471,7 +471,6 @@ extension WeatherScreenVC: WeatherVCInterface {
         thirdParameterStackView.addArrangedSubview(title)
         thirdParameterStackView.addArrangedSubview(windSpeedParameter)
         thirdParameterStackView.addArrangedSubview(windDirectionParameter)
-        
         title.text = "💨 WIND"
         title.font = UIFont.systemFont(ofSize: 15, weight: .black)
         title.alpha = 0.6
@@ -523,7 +522,6 @@ extension WeatherScreenVC: WeatherVCInterface {
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.separatorColor = UIColor.white
-        //stableView.layer.borderWidth = 1
         tableView.layer.cornerRadius = 12
         tableView.layer.borderColor = UIColor.white.cgColor
         

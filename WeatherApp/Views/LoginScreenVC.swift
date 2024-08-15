@@ -53,9 +53,10 @@ final class LoginScreenVC: UIViewController, UITextFieldDelegate {
         view.addSubview(enterButton)
         
         animation.translatesAutoresizingMaskIntoConstraints = false
+        enterButton.addTarget(self, action: #selector(pushWeatherScreenVC), for: .touchUpInside)
+
         view.backgroundColor = UIColor { traitCollection in
             return traitCollection.userInterfaceStyle == .dark ? .black : UIColor.systemCyan }
-        enterButton.addTarget(self, action: #selector(pushWeatherScreenVC), for: .touchUpInside)
         
         LoginScreenVC.apiTextField.textColor = UIColor { traitCollection in
             return traitCollection.userInterfaceStyle == .dark ? .black : UIColor.black
@@ -63,7 +64,7 @@ final class LoginScreenVC: UIViewController, UITextFieldDelegate {
         LoginScreenVC.apiTextField.backgroundColor = UIColor { traitCollection in
             return traitCollection.userInterfaceStyle == .dark ? .white : UIColor.white
         }
-
+        
         NSLayoutConstraint.activate([
             animation.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             animation.centerXAnchor.constraint(equalTo: view.centerXAnchor),

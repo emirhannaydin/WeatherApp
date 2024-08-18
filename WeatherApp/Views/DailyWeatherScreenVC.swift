@@ -135,8 +135,6 @@ extension DailyWeatherScreenVC: DailyWeatherVCInterface {
             self.present(alertVC, animated: true)
         }
     }
-    
-    
     func prepareViewWithWeather(weather: Daily) {
         let date = Date(timeIntervalSince1970: TimeInterval(weather.dt))
         let dateFormatter = DateFormatter()

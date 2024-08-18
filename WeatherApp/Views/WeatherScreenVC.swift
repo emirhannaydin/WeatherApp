@@ -223,18 +223,15 @@ final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
                         
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-
             
             indicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-           
             
             cityLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 20),
             cityLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 50),
@@ -320,8 +317,6 @@ extension WeatherScreenVC: WeatherVCInterface {
         }
 
     }
-    
-    
     func presentAlertOnViewModel(title: String, message: String, buttonTitle: String) {
         DispatchQueue.main.async {
             let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -378,10 +373,8 @@ extension WeatherScreenVC: WeatherVCInterface {
             self.collectionView.reloadData()
             self.tableView.reloadData()
             self.viewModel.getCityName(latitude: lat, longitude: lon)
-            
             self.humidityParameter.text = "%\(weather.current.humidity)"
             self.feelsLikeParameter.text = "\(Int(weather.current.feels_like))°C"
-            
             self.windSpeedParameter.text = "Speed = \(weather.current.wind_speed) m/s"
             self.windDirectionParameter.text = "Direction = \(weather.current.wind_deg)°"
             self.stopIndicator()
@@ -393,7 +386,6 @@ extension WeatherScreenVC: WeatherVCInterface {
     func prepareIconStackView() {
         iconstackView.addArrangedSubview(iconImage)
         iconstackView.addArrangedSubview(logoImageDescription)
-        
         iconstackView.axis = NSLayoutConstraint.Axis.horizontal
         iconstackView.distribution = .fillEqually
         iconstackView.alignment = .center

@@ -125,9 +125,6 @@ final class SearchVC: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     self.presentAlert(title: "Error", message: "City name could not be found.", buttonTitle: "OK")
                     return
                 }
-                
-                
-                
                 if let placemark = placemarks?.first {
                     self.mapView.removeAnnotations(self.mapView.annotations)
                     

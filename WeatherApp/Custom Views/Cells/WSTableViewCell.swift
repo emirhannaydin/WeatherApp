@@ -5,16 +5,11 @@
 //  Created by Emirhan Aydın on 10.07.2024.
 //
 
-protocol WSTableViewCellDelegate: AnyObject {
-    func presentAlert(title: String, message: String, buttonTitle: String)
-}
 import UIKit
 
 final class WSTableViewCell: UITableViewCell {
-    static let identifier = "DailyCell"
     
-    weak var delegate: WSTableViewCellDelegate?
-
+    static let identifier = "DailyCell"
     
     var dayLabel = UILabel()
     var minTempLabel = UILabel()
@@ -63,7 +58,7 @@ final class WSTableViewCell: UITableViewCell {
             
             if let errorMessage = errorMessage {
                         DispatchQueue.main.async {
-                            self?.delegate?.presentAlert(title: "Error", message: errorMessage.rawValue, buttonTitle: "OK")
+                            print("Error: \(errorMessage.rawValue)")
                         }
                         return
             }
@@ -72,8 +67,8 @@ final class WSTableViewCell: UITableViewCell {
                     self?.tempImageView.image = UIImage(data: data)
                         }
                     }
-                
         }
+
     }
     
     

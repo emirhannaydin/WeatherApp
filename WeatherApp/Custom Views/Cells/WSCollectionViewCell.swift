@@ -65,17 +65,23 @@ final class WSCollectionViewCell: UICollectionViewCell {
 
     }
     
-    private func getIcon(icon : String){
-        if let url = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png") {
-                    URLSession.shared.dataTask(with: url) { data, response, error in
-                        if let data = data, error == nil {
-                            DispatchQueue.main.async {
-                                self.weatherIcon.image = UIImage(data: data)
-                            }
+    func getIcon(icon : String){
+        NetworkManager.shared.getIcon(icon: icon) { [weak self] data, errorMessage in
+            
+            if let errorMessage = errorMessage {
+                        DispatchQueue.main.async {
+                            print("Error: \(errorMessage.rawValue)")
+                        }
+                        return
+            }
+            if let data = data {
+                DispatchQueue.main.async {
+                    self?.weatherIcon.image = UIImage(data: data)
                         }
                     }
-                    .resume()
-                }
+                
+        }
+
     }
     
     private func configure() {

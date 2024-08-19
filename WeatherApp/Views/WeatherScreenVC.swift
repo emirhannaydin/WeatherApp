@@ -19,6 +19,7 @@ protocol WeatherVCInterface: AnyObject {
     func prepareThirdParameterStackView()
     func prepareCombineStackView()
     func startIndicator()
+    func stopIndicator()
     func setupLocationManager()
     func changeUI(weather: Weather, lat: Double, lon: Double)
     func changeCityLabel(city: City)
@@ -77,8 +78,6 @@ final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name("FavoriteCityRemoved"), object: nil)
     }
-    
-    
     
     @objc func updateFavoriteButtonState() {
         let defaults = UserDefaults.standard
@@ -280,14 +279,7 @@ final class WeatherScreenVC: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    func stopIndicator() {
-        indicator.stopAnimating()
-        tableView.isHidden = false
-        iconImage.isHidden = false
-        cityLabel.isHidden = false
-        celciusLabel.isHidden = false
-        indicator.isHidden = true
-    }
+    
 }
 
 //MARK: - ViewController Interface Funcs
@@ -359,6 +351,15 @@ extension WeatherScreenVC: WeatherVCInterface {
         iconImage.isHidden = true
         cityLabel.isHidden = true
         celciusLabel.isHidden = true
+    }
+    
+    func stopIndicator() {
+        indicator.stopAnimating()
+        tableView.isHidden = false
+        iconImage.isHidden = false
+        cityLabel.isHidden = false
+        celciusLabel.isHidden = false
+        indicator.isHidden = true
     }
     
     func changeUI(weather: Weather, lat: Double, lon: Double) {

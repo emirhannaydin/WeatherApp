@@ -26,7 +26,6 @@ final class LoginScreenVC: UIViewController, UITextFieldDelegate {
         configureAnimation()
         configureWeatherImage()
         configureGestureRecognizer()
-        LoginScreenVC.apiTextField.text = "8ddadecc7ae4f56fee73b2b405a63659"
 
     }
     
@@ -35,7 +34,6 @@ final class LoginScreenVC: UIViewController, UITextFieldDelegate {
             self.presentAlert(title: "Error", message: "API key is empty", buttonTitle: "OK")
             return
         }
-
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
         let tabBarController = sceneDelegate?.configureTabBarWithWeather(apiKey: apiKey)
         sceneDelegate?.window?.rootViewController = tabBarController
